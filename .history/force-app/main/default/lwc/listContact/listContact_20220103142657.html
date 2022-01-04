@@ -1,0 +1,28 @@
+<template>
+    <template if:true={allActivitiesData}>
+
+            <lightning-input type="search"
+                onchange={handleSearchTermChange}
+                variant="label-hidden"
+                label="Search"
+                class="search-contact input-contact"
+                data-id='username' 
+                placeholder="Search Contacts By Name"
+                value={searchTerm}>
+            </lightning-input>
+            <lightning-button 
+                type="submit" 
+                onclick={handleSearchContacts} 
+                class="search-contact" 
+                label="FILTER" >
+            </lightning-button>
+
+        <lightning-datatable data={allActivitiesData} columns={columns} key-field="id" hide-checkbox-column="true"></lightning-datatable>
+        
+        <template if:false={hasResults}>
+            <div class="result-search">
+                We did not find contact with this name 
+            </div>
+        </template>
+    </template>
+</template>

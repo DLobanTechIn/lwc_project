@@ -1,0 +1,6 @@
+public with sharing class ContactController {
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getContactList() {
+        return [SELECT Id,  (select id, name from Accounts__r),  FirstName, LastName, Email,  Phone, CreatedDate FROM Contact LIMIT 15];
+    }
+}

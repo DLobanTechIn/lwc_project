@@ -1,0 +1,17 @@
+<template>
+    <template if:true={allActivitiesData}>
+            <lightning-input type="search"
+                onchange={handleSearchTermChange}
+                variant="label-hidden"
+                label="Search"
+                class="input-contact"
+                placeholder="Search Contacts By Name"
+                value={searchTerm}>
+            </lightning-input>
+            <lightning-button type="submit" label="FILTER" >
+            </lightning-button>
+
+
+        <lightning-datatable data={allActivitiesData} columns={columns} key-field="id" hide-checkbox-column="true"></lightning-datatable>
+    </template>
+</template>
