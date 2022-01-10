@@ -1,6 +1,20 @@
+:host {
+    --sds-c-button-destructive-color-background-hover: rgb(209, 56, 56);
+    --sds-c-button-destructive-color-border-hover: rgb(209, 56, 56);
+}
 .search-contact{
     display: inline-grid;
     margin-bottom: 5px;
+    --sds-c-button-neutral-color-background: rgb(68, 85, 180);
+    --sds-c-button-neutral-color-background-hover: rgb(144, 153, 204);
+    --sds-c-button-text-color: white;
+    --sds-c-button-text-color-hover: black;
+}
+
+.create-contact{
+    display: inline-grid;
+    margin-bottom: 5px;
+    padding-left:5px;
 }
 .input-contact{
     width: 50%;
