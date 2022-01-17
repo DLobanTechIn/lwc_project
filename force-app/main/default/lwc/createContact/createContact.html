@@ -14,13 +14,13 @@
                 <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create a NEW Contact</h2>
             </header>
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                <lightning-record-edit-form object-api-name={fields.contactObject} onsuccess={handleContactCreated}>
+                <lightning-record-edit-form object-api-name="Contact">
                     <lightning-messages></lightning-messages>
-                    <lightning-input-field field-name={fields.firstName} onchange={handleNameChange}></lightning-input-field>
-                    <lightning-input-field field-name={fields.lastName} onchange={handleSecNameChange}></lightning-input-field>
-                    <lightning-input-field field-name={fields.email} onchange={handleEmailChange}></lightning-input-field>
-                    <lightning-input-field field-name={fields.account} onchange={handleAccountChange}></lightning-input-field>
-                    <lightning-input-field field-name={fields.phone} onchange={handlePhoneChange}></lightning-input-field>
+                    <lightning-input-field data-name='FirstName' field-name=FirstName onchange={handleNameChange}></lightning-input-field>
+                    <lightning-input-field data-name='LastName' field-name=LastName onchange={handleSecNameChange}></lightning-input-field>
+                    <lightning-input-field data-name='Email' field-name=Email onchange={handleEmailChange}></lightning-input-field>
+                    <lightning-input-field data-name='Account' field-name=AccountId onchange={handleAccountChange}></lightning-input-field>
+                    <lightning-input-field data-name='Phone' field-name=Phone onchange={handlePhoneChange}></lightning-input-field>
                 </lightning-record-edit-form>
             </div>
             <footer class="slds-modal__footer">

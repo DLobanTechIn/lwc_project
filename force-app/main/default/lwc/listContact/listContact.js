@@ -1,4 +1,5 @@
 import { LightningElement, api, track, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
 import getContactFilter from '@salesforce/apex/ContactController.getContactFilter';
 
 const columns = [
@@ -31,62 +32,68 @@ export default class ListContact extends LightningElement {
     searchName = '';
     @track record = {};
     @track allActivitiesData;
-    @api сShowModal;
-    @track dShowModal; 
+    @track dataToRefresh;
+    @track ShowCreateModal; //ПЕРЕНАЗЫВАТЬ ПО ЛОГИКЕ
+    @track ShowDeleteModal; 
 
+    get hasNoResults() { //переменная поэтому НЕ В КОНЦЕ
+        let result  = this.allActivitiesData.length;
+		return (result<=0);
+	}
     
     
     @wire(getContactFilter, {searchName: '$searchName'})
 	wiredActivities(result) {
 	  this.allActivitiesData = result;
-      if (result.data) 
+      this.dataToRefresh = result;
+      const {data, error} = result;         //деструктуризация это независимое место со своим значением
+      if (data) 
       {
-           this.allActivitiesData =  result.data.map( 
+           this.allActivitiesData =  data.map( 
                record => Object.assign( { 
-                    "Account.Name": record.Account.Name,
-                    "Link":'/lightning/r/Account/' + record.Account.Id + '/view',
-                    "Id": record.Id
+                    "Account.Name": record.Account?.Name,
+                    "Link":record.Account?'/lightning/r/Account/' + record.Account.Id + '/view':""
                 }, record )
            );
         
        }
+       if(error){
+           console.log(error.body.message);
+       }
+      
 	}
+
+
 
     handleClickDelete(event) {
         const row = event.detail.row;
         this.record = row;
-        this.dShowModal = true;
-    }
-
-    closeModal(event) {
-        this.dShowModal = false;
-        this.сShowModal = false;  
-
+        this.ShowDeleteModal = true;
     }
 
     handleCreateContact(event){
-        this.сShowModal = true;
+        this.ShowCreateModal = true;
+    }
+
+    closeModal() {
+        this.ShowDeleteModal = false;
+        this.ShowCreateModal = false;  
+        refreshApex(this.dataToRefresh);
     }
 
 	handleSearchTermChange(event) {
 		window.clearTimeout(this.delayTimeout);
 		const searchName = event.target.value;
-
         if(!searchName){
             this.searchName = searchName;
         }
 	}
     
     handleSearchContacts(event) {
-		window.clearTimeout(this.delayTimeout);
+		window.clearTimeout(this.delayTimeout); 
         let valueInput =  this.template.querySelector('lightning-input[data-id=username]').value;
 		this.delayTimeout = setTimeout(() => {
 			this.searchName = valueInput;
-		}, 100);
-	}
-
-    get hasNoResults() {
-        let result  = this.allActivitiesData.length;
-		return (result<=0);
+		}, 200);
 	}
 }

@@ -1,8 +1,12 @@
 public with sharing class createContactController {
     @AuraEnabled
-    public static Contact createContact(Contact con) {
-        system.debug('contact:'+con);
-        insert con;
-        return con;
+    public static void createContact(Contact con) {
+        try {
+            system.debug('contact:'+con);
+            insert con;
+        } catch (Exception error) {
+            system.debug('We have mistake:'+error.getMessage());
+        }
+
     }
 }

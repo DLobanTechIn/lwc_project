@@ -1,19 +1,16 @@
 public with sharing class ContactController {
 
   @AuraEnabled(cacheable=true)
-  public static List<Contact> getContactList() {
-    return  [SELECT Id, AccountId, Account.Name,  FirstName, LastName, Email,  Phone, CreatedDate FROM Contact];
-  }
-
-
-  @AuraEnabled(cacheable=true)
   public static List<Contact> getContactFilter(String searchName) {
-    searchName = searchName.trim();
-    if (searchName == '') {
-      return getContactList();
+    try {
+      searchName = searchName.trim();
+      searchName = '%' + searchName + '%';
+      return  [SELECT Id, AccountId, Account.Name,  FirstName, LastName, Email,  Phone, CreatedDate FROM Contact WHERE Name LIKE :searchName];
+    } catch (Exception error) {
+      System.debug('Sorry, we have some mistakes: ' + error.getMessage());
+      return null;
     }
-    searchName = '%' + searchName + '%';
-    return  [SELECT Id, AccountId, Account.Name,  FirstName, LastName, Email,  Phone, CreatedDate FROM Contact WHERE Name LIKE :searchName];
+    
   }
 
 

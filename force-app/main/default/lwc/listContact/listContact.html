@@ -23,13 +23,13 @@
             label="NEW" >
     </lightning-button>
 
-        <template if:true={dShowModal}>
+        <template if:true={ShowDeleteModal}>
             <c-delete-contact record-id={record.Id} onclose={closeModal}>
             </c-delete-contact>
         </template>
 
-        <template if:true={сShowModal}>
-            <c-create-contact onclose={closeModal}>
+        <template if:true={ShowCreateModal}>
+            <c-create-contact  onclose={closeModal}>
             </c-create-contact>
         </template>
 
