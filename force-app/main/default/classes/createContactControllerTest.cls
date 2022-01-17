@@ -1,9 +1,13 @@
 @isTest
 private with sharing class createContactControllerTest {
     @isTest static void testCreate() {
-        Contact test = new Contact(FirstName='Test', LastName='Test1', Email='test@test.com', 
-            AccountId='0015j00000OuRikAAF', Phone='73333333333');
-        createContactController.createContact(test);
+
+        Test.startTest();
+        createContactController.createContact(new Contact(
+            FirstName='Test', LastName='Test1', Email='test@test.com', 
+            AccountId='0015j00000OuRikAAF', Phone='73333333333')
+        );
+        Test.stopTest();
 
         Contact verifyContact = [SELECT LastName FROM Contact LIMIT 1];
 
